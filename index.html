@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArenaCash — Indique um amigo</title>
+<style>
+  :root {
+    --green: #0F8A4B;
+    --green-dark: #0A5C32;
+    --purple: #6C2BD9;
+    --purple-dark: #4B1A99;
+    --white: #FFFFFF;
+    --cream: #F5F3EF;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 45%, var(--green) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .slide {
+    width: 100%;
+    max-width: 960px;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(160deg, var(--green-dark) 0%, var(--purple-dark) 100%);
+    border-radius: 24px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px;
+  }
+
+  .slide::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .slide::after {
+    content: "";
+    position: absolute;
+    bottom: -100px;
+    left: -60px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .brand {
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    z-index: 1;
+  }
+
+  h1 {
+    color: var(--white);
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    max-width: 720px;
+    z-index: 1;
+  }
+
+  h1 .highlight {
+    color: #C6F6D5;
+  }
+
+  .subtitle {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    margin-top: 20px;
+    max-width: 560px;
+    z-index: 1;
+  }
+
+  .cta-button {
+    margin-top: 40px;
+    padding: 16px 42px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    background: var(--white);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    z-index: 1;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.3);
+  }
+
+  .cta-button:active {
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+  <main class="slide">
+    <div class="brand">ArenaCash</div>
+    <h1>Indique um amigo e ganhe <span class="highlight">R$ 50</span></h1>
+    <p class="subtitle">Compartilhe seu código, seu amigo se cadastra e vocês dois saem ganhando.</p>
+    <button class="cta-button" type="button" onclick="window.location.hash='saiba-mais'">Saiba mais</button>
+  </main>
+</body>
+</html>
