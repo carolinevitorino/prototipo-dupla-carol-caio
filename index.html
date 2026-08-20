@@ -28,8 +28,10 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 45%, var(--green) 100%);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 32px;
     min-height: 100vh;
     padding: 24px;
   }
@@ -128,6 +130,56 @@
   .cta-button:active {
     transform: translateY(0);
   }
+
+  .quote {
+    color: var(--white);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 680px;
+    z-index: 1;
+  }
+
+  .depoente {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 32px;
+    z-index: 1;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--purple-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .depoente-info {
+    text-align: left;
+  }
+
+  .depoente-info strong {
+    display: block;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .depoente-info span {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    margin-top: 2px;
+  }
 </style>
 </head>
 <body>
@@ -137,5 +189,17 @@
     <p class="subtitle">Compartilhe seu código, seu amigo se cadastra e vocês dois saem ganhando.</p>
     <button class="cta-button" type="button" onclick="window.location.hash='saiba-mais'">Confira!</button>
   </main>
+
+  <section class="slide" aria-label="Depoimento de cliente sobre a campanha">
+    <div class="brand">ArenaCash</div>
+    <p class="quote">"Indiquei três amigos em uma semana e o dinheiro caiu na conta na hora. Nunca vi um programa de indicação tão simples!"</p>
+    <div class="depoente">
+      <div class="avatar">MF</div>
+      <div class="depoente-info">
+        <strong>Mariana Ferreira</strong>
+        <span>Cliente ArenaCash</span>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
