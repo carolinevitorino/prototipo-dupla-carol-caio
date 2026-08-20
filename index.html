@@ -129,6 +129,17 @@
     transform: translateY(0);
   }
 
+  .visit-counter {
+    margin-top: 28px;
+    z-index: 1;
+    opacity: 0.9;
+  }
+
+  .visit-counter img {
+    display: block;
+    border-radius: 4px;
+  }
+
   .quote {
     color: var(--white);
     font-size: clamp(1.25rem, 3vw, 1.75rem);
@@ -253,6 +264,9 @@
       <h1>Indique um amigo e ganhe <span class="highlight">R$ 50</span></h1>
       <p class="subtitle">Compartilhe seu código, seu amigo se cadastra e vocês dois saem ganhando.</p>
       <button class="cta-button" type="button" onclick="window.location.hash='saiba-mais'">Confira!</button>
+      <div class="visit-counter">
+        <img src="https://hits.sh/github.com/carolinevitorino/prototipo-dupla-carol-caio.svg?style=flat-square&label=acessos%20ao%20site&color=0f8a4b" alt="Contador de acessos ao site" />
+      </div>
     </main>
 
     <main class="slide benefits">
