@@ -244,6 +244,145 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .ranking-toggle {
+    margin-top: 4px;
+    padding: 14px 34px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    cursor: pointer;
+    z-index: 1;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .ranking-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  .ranking-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 5, 25, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 10;
+  }
+
+  .ranking-overlay[hidden] {
+    display: none;
+  }
+
+  .ranking-modal {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 36px 32px 28px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  .ranking-fechar {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(10, 5, 25, 0.08);
+    color: var(--purple-dark);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .ranking-fechar:hover {
+    background: rgba(10, 5, 25, 0.16);
+  }
+
+  .ranking-titulo {
+    color: var(--purple-dark);
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .ranking-subtitulo {
+    color: #555;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .ranking-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .ranking-posicao {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--green-dark);
+    color: var(--white);
+    font-weight: 800;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ranking-item:nth-child(1) .ranking-posicao { background: #D4A017; }
+  .ranking-item:nth-child(2) .ranking-posicao { background: #8C8C8C; }
+  .ranking-item:nth-child(3) .ranking-posicao { background: #A15C2B; }
+
+  .ranking-info {
+    flex: 1;
+    text-align: left;
+  }
+
+  .ranking-nome {
+    display: block;
+    color: var(--purple-dark);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .ranking-indicacoes {
+    display: block;
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 2px;
+  }
+
+  .ranking-ganho {
+    color: var(--green-dark);
+    font-weight: 800;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
 </style>
 </head>
 <body>
@@ -253,6 +392,7 @@
       <h1>Indique um amigo e ganhe <span class="highlight">R$ 50</span></h1>
       <p class="subtitle">Compartilhe seu código, seu amigo se cadastra e vocês dois saem ganhando.</p>
       <button class="cta-button" type="button" onclick="window.location.hash='saiba-mais'">Confira!</button>
+      <button class="ranking-toggle" type="button" onclick="abrirRanking()">Ver ranking de indicações</button>
     </main>
 
     <main class="slide benefits">
@@ -289,5 +429,65 @@
       </div>
     </section>
   </div>
+
+  <div class="ranking-overlay" id="rankingOverlay" hidden>
+    <div class="ranking-modal" role="dialog" aria-modal="true" aria-labelledby="rankingTitulo">
+      <button class="ranking-fechar" type="button" onclick="fecharRanking()" aria-label="Fechar ranking">×</button>
+      <h2 class="ranking-titulo" id="rankingTitulo">Top 10 indicações</h2>
+      <p class="ranking-subtitulo">Quem mais indicou amigos para a ArenaCash e quanto já ganhou.</p>
+      <ol class="ranking-lista" id="rankingLista"></ol>
+    </div>
+  </div>
+
+  <script>
+    var RANKING = [
+      { nome: 'Rafael Souza', indicacoes: 42 },
+      { nome: 'Beatriz Lima', indicacoes: 37 },
+      { nome: 'Thiago Alves', indicacoes: 33 },
+      { nome: 'Camila Rocha', indicacoes: 29 },
+      { nome: 'Lucas Martins', indicacoes: 26 },
+      { nome: 'Fernanda Dias', indicacoes: 22 },
+      { nome: 'Bruno Cardoso', indicacoes: 19 },
+      { nome: 'Juliana Peixoto', indicacoes: 16 },
+      { nome: 'Diego Nascimento', indicacoes: 12 },
+      { nome: 'Patrícia Gomes', indicacoes: 9 }
+    ];
+
+    var GANHO_POR_INDICACAO = 50;
+
+    function renderizarRanking() {
+      var lista = document.getElementById('rankingLista');
+      lista.innerHTML = RANKING.map(function (pessoa, indice) {
+        var ganho = pessoa.indicacoes * GANHO_POR_INDICACAO;
+        return (
+          '<li class="ranking-item">' +
+            '<span class="ranking-posicao">' + (indice + 1) + '</span>' +
+            '<span class="ranking-info">' +
+              '<span class="ranking-nome">' + pessoa.nome + '</span>' +
+              '<span class="ranking-indicacoes">' + pessoa.indicacoes + ' indicações</span>' +
+            '</span>' +
+            '<span class="ranking-ganho">R$ ' + ganho.toLocaleString('pt-BR') + '</span>' +
+          '</li>'
+        );
+      }).join('');
+    }
+
+    function abrirRanking() {
+      renderizarRanking();
+      document.getElementById('rankingOverlay').hidden = false;
+    }
+
+    function fecharRanking() {
+      document.getElementById('rankingOverlay').hidden = true;
+    }
+
+    document.getElementById('rankingOverlay').addEventListener('click', function (evento) {
+      if (evento.target === this) fecharRanking();
+    });
+
+    document.addEventListener('keydown', function (evento) {
+      if (evento.key === 'Escape') fecharRanking();
+    });
+  </script>
 </body>
 </html>
